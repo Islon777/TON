@@ -1,0 +1,65 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createToken",
+			"inputs": [
+				{"name":"name","type":"string"},
+				{"name":"author","type":"string"},
+				{"name":"size","type":"uint256"},
+				{"name":"sampleFrec","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "setForSale",
+			"inputs": [
+				{"name":"tokenName","type":"string"},
+				{"name":"price","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "tokenArr",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"name","type":"string"},{"name":"author","type":"string"},{"name":"size","type":"uint256"},{"name":"sampleFreq","type":"uint256"}],"name":"tokenArr","type":"tuple[]"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+		{
+			"name": "forSale",
+			"inputs": [
+				{"name":"tokenOwner","type":"uint256"},
+				{"components":[{"name":"name","type":"string"},{"name":"author","type":"string"},{"name":"size","type":"uint256"},{"name":"sampleFreq","type":"uint256"}],"name":"tokenForSale","type":"tuple"},
+				{"name":"price","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"tokenToOwner","type":"optional(cell)"},
+		{"name":"tokenList","type":"optional(cell)"},
+		{"name":"tokenPrice","type":"optional(cell)"},
+		{"components":[{"name":"name","type":"string"},{"name":"author","type":"string"},{"name":"size","type":"uint256"},{"name":"sampleFreq","type":"uint256"}],"name":"tokenArr","type":"tuple[]"}
+	]
+}

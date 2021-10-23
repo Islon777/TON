@@ -1,0 +1,90 @@
+{
+	"ABI version": 2,
+	"version": "2.1",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "task_add",
+			"inputs": [
+				{"name":"taskName","type":"string"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "task_current",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"uint8"}
+			]
+		},
+		{
+			"name": "task_view",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"string[]"}
+			]
+		},
+		{
+			"name": "task_info",
+			"inputs": [
+				{"name":"taskKey","type":"int8"}
+			],
+			"outputs": [
+				{"components":[{"name":"taskName","type":"string"},{"name":"timeStamp","type":"uint32"},{"name":"finishFlg","type":"bool"}],"name":"value0","type":"tuple"}
+			]
+		},
+		{
+			"name": "task_delete",
+			"inputs": [
+				{"name":"taskKey","type":"int8"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "task_finish",
+			"inputs": [
+				{"name":"taskKey","type":"int8"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "taskList",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"taskName","type":"string"},{"name":"timeStamp","type":"uint32"},{"name":"finishFlg","type":"bool"}],"name":"taskList","type":"map(int8,tuple)"}
+			]
+		},
+		{
+			"name": "taskCount",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"taskCount","type":"int8"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"components":[{"name":"taskName","type":"string"},{"name":"timeStamp","type":"uint32"},{"name":"finishFlg","type":"bool"}],"name":"taskList","type":"map(int8,tuple)"},
+		{"name":"taskCount","type":"int8"}
+	]
+}
