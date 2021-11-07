@@ -11,7 +11,7 @@ contract purchaseList is InitializationDebot {
     PurchaseSummary m_stat;        
 
 
-    function createPurchaseDebot(uint32 index) public {
+    function createPurchaseDebot(uint32 index) public override{
         index = index;
         string name;
         unit32 count;
