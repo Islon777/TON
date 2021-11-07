@@ -1,0 +1,77 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+				{"name":"pubkey","type":"uint256"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "createPurchase",
+			"inputs": [
+				{"name":"name","type":"string"},
+				{"name":"count","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "deletePurchase",
+			"inputs": [
+				{"name":"id","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "payPurchase",
+			"inputs": [
+				{"name":"id","type":"uint32"},
+				{"name":"sum","type":"uint32"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getPurchases",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"id","type":"uint32"},{"name":"name","type":"string"},{"name":"count","type":"uint32"},{"name":"timstamp","type":"uint64"},{"name":"isBought","type":"bool"},{"name":"sum","type":"uint32"}],"name":"purchases","type":"tuple[]"}
+			]
+		},
+		{
+			"name": "getStat",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"paid","type":"uint32"},{"name":"unpaid","type":"uint32"},{"name":"totalSum","type":"uint64"}],"name":"buysSummary","type":"tuple"}
+			]
+		},
+		{
+			"name": "m_buyList",
+			"inputs": [
+			],
+			"outputs": [
+				{"components":[{"name":"id","type":"uint32"},{"name":"name","type":"string"},{"name":"count","type":"uint32"},{"name":"timstamp","type":"uint64"},{"name":"isBought","type":"bool"},{"name":"sum","type":"uint32"}],"name":"m_buyList","type":"map(uint32,tuple)"}
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"m_ownerPubkey","type":"uint256"},
+		{"name":"m_count","type":"uint32"},
+		{"components":[{"name":"id","type":"uint32"},{"name":"name","type":"string"},{"name":"count","type":"uint32"},{"name":"timstamp","type":"uint64"},{"name":"isBought","type":"bool"},{"name":"sum","type":"uint32"}],"name":"m_buyList","type":"map(uint32,tuple)"}
+	]
+}
