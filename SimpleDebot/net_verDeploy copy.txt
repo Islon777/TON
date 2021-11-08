@@ -1,0 +1,36 @@
+Изменить содержимое purchaseListDebot.sol в соответствии с тем, как в начале видео
++ tondev sol compile purchaseList.sol
++ tonos-cli decode stateinit purchaseList.tvc --tvc
++ сохранить purchaseList.decode.json
++ tondev sol compile purchaseListDebot.sol
++ tonos-cli genaddr purchaseListDebot.tvc purchaseListDebot.abi.json --setkey purchaseListDebot.keys.json > log.log
+=- Заполнить файл params.json
+В моем случае:
+{
+    "dest": "0:1a62950061f4099a606d33a23f2b4a80f5e5d18e0394d43fd3ea79b66ed21a33",
+    "amount": 10000000000
+}
+Закинуть денег
+=- tonos-cli --url https://net.ton.dev call --abi ../base/Local_giver.abi.json 0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94 sendGrams params.json
+вместо этого EXTRATON
+Задеплоить
+tonos-cli --url https://net.ton.dev deploy purchaseListDebot.tvc "{}" --sign purchaseListDebot.keys.json --abi purchaseListDebot.abi.json
++ bash
++ cat purchaseListDebot.abi.json | xxd -p -c 20000
+exit
++ Записать dabi.json - в моем случае:
+{
+    "dabi": "7b0d0a0........d0a7d0d0a"
+}
+Установить dabi
+tonos-cli --url https://net.ton.dev call 0:1a62950061f4099a606d33a23f2b4a80f5e5d18e0394d43fd3ea79b66ed21a33 setABI dabi.json --sign purchaseListDebot.keys.json --abi purchaseListDebot.abi.json
+!!!!!!!!!
+вызвать
+=- tonos-cli --url https://net.ton.dev run --abi purchaseListDebot.abi.json 0:41937d8d08c7a43471a091308eda6c0d1b3ba94ed3e96407a93d374226517d83 getDebotInfo "{}"
+предварительно сформировать Todo.decode.json
+tonos-cli --url https://net.ton.dev call --abi purchaseListDebot.abi.json --sign purchaseListDebot.keys.json 0:1a62950061f4099a606d33a23f2b4a80f5e5d18e0394d43fd3ea79b66ed21a33 setTodoCode purchaseList.decode.json
+Вызываем дебота
+=- tonos-cli --url https://net.ton.dev debot --debug fetch 0:0:1a62950061f4099a606d33a23f2b4a80f5e5d18e0394d43fd3ea79b66ed21a33
+
+
+https://web.ton.surf/debot?address=0%3A0:1a62950061f4099a606d33a23f2b4a80f5e5d18e0394d43fd3ea79b66ed21a33&net=devnet&restart=true

@@ -1,0 +1,17 @@
+Config: default
+Input arguments:
+     tvc: purchaseList.tvc
+      wc: None
+    keys: purchaseList.keys.json
+init_data: None
+is_update_tvc: None
+
+Seed phrase: "basket clip inform network human spot good boat bird venture point stable"
+Raw address: 0:b2a9e5225cefe7ffa8d191d636e77562335278f0fd1ff868cfb5b8b5085b7eed
+testnet:
+Non-bounceable address (for init): 0QCyqeUiXO_n_6jRkdY253ViM1J48P0f-GjPtbi1CFt-7Z1R
+Bounceable address (for later access): kQCyqeUiXO_n_6jRkdY253ViM1J48P0f-GjPtbi1CFt-7cCU
+mainnet:
+Non-bounceable address (for init): UQCyqeUiXO_n_6jRkdY253ViM1J48P0f-GjPtbi1CFt-7Sbb
+Bounceable address (for later access): EQCyqeUiXO_n_6jRkdY253ViM1J48P0f-GjPtbi1CFt-7Xse
+Succeeded

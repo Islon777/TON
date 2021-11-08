@@ -1,0 +1,35 @@
+tondev sol compile purchaseList.sol
+tonos-cli decode stateinit purchaseList.tvc --tvc
+
+сохранить purchaseList.decode.json
+
+tondev sol compile purchaseListDebot.sol
+tonos-cli genaddr purchaseListDebot.tvc purchaseListDebot.abi.json --setkey purchaseListDebot.keys.json > log.log
+Заполнить файл params.json
+В моем случае:
+{
+    "dest": "",
+    "amount": 10000000000
+}
+Закинуть денег # 0:b5e9240fc2d2f1ff8cbb1d1dee7fb7cae155e5f6320e585fcc685698994a19a5
+tonos-cli --url http://127.0.0.1 call --abi ./local_giver.abi.json 0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94 sendGrams params.json
+Задеплоить
+tonos-cli --url http://127.0.0.1 deploy purchaseListDebot.tvc "{}" --sign purchaseListDebot.keys.json --abi purchaseListDebot.abi.json
+bash
+cat purchaseListDebot.abi.json | xxd -p -c 20000
+exit
+Записать dabi.json - в моем случае:
+{
+    "dabi": "7b0d0a0........d0a7d0d0a"
+}
+Установить dabi
+tonos-cli --url http://127.0.0.1 call 0:d5df5ba89c35cd30cd3db96b33759e83bdf3e7582cf6ebfa6d734bfb1bdd5e68 setABI dabi.json --sign purchaseListDebot.keys.json --abi purchaseListDebot.abi.json
+!!!!!!!!!
+вызвать
+tonos-cli --url http://127.0.0.1 run --abi purchaseListDebot.abi.json 0:d5df5ba89c35cd30cd3db96b33759e83bdf3e7582cf6ebfa6d734bfb1bdd5e68 getDebotInfo "{}"
+предварительно сформировать Todo.decode.json
+tonos-cli --url http://127.0.0.1 call --abi purchaseListDebot.abi.json --sign purchaseListDebot.keys.json 0:d5df5ba89c35cd30cd3db96b33759e83bdf3e7582cf6ebfa6d734bfb1bdd5e68 setCode purchaseList.decode.json
+Вызываем дебота
+tonos-cli --url http://127.0.0.1 debot fetch 0:d5df5ba89c35cd30cd3db96b33759e83bdf3e7582cf6ebfa6d734bfb1bdd5e68
+Ошибка, которую можно получить, если не перейти на иную работу со stateInit как в лекции:
+Debot error: Contract execution was terminated with error: Unknown error, exit code: 55 (Bad StateInit cell for tvm_insert_pubkey. Data was not found.)

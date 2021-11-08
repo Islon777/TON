@@ -1,0 +1,36 @@
+Изменить содержимое TodoDebot.sol в соответствии с тем, как в начале видео
++ tondev sol compile Todo.sol
++ tonos-cli decode stateinit Todo.tvc --tvc
++ сохранить Todo.decode.json
++ tondev sol compile TodoDebot.sol
++ tonos-cli genaddr TodoDebot.tvc TodoDebot.abi.json --setkey TodoDebot.keys.json > log.log
+=- Заполнить файл params.json
+В моем случае:
+{
+    "dest": "0:0feaa51229b24c92c8a4ca8155f061aadf83078d35163e5895417127770bbd69",
+    "amount": 10000000000
+}
+Закинуть денег
+=- tonos-cli --url https://net.ton.dev call --abi ../base/Local_giver.abi.json 0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94 sendGrams params.json
+вместо этого EXTRATON
+Задеплоить
+tonos-cli --url https://net.ton.dev deploy TodoDebot.tvc "{}" --sign TodoDebot.keys.json --abi TodoDebot.abi.json
++ bash
++ cat TodoDebot.abi.json | xxd -p -c 20000
+exit
++ Записать dabi.json - в моем случае:
+{
+    "dabi": "7b0d0a0........d0a7d0d0a"
+}
+Установить dabi
+tonos-cli --url https://net.ton.dev call 0:41937d8d08c7a43471a091308eda6c0d1b3ba94ed3e96407a93d374226517d83 setABI dabi.json --sign TodoDebot.keys.json --abi TodoDebot.abi.json
+!!!!!!!!!
+вызвать
+=- tonos-cli --url https://net.ton.dev run --abi TodoDebot.abi.json 0:41937d8d08c7a43471a091308eda6c0d1b3ba94ed3e96407a93d374226517d83 getDebotInfo "{}"
+предварительно сформировать Todo.decode.json
+tonos-cli --url https://net.ton.dev call --abi TodoDebot.abi.json --sign TodoDebot.keys.json 0:41937d8d08c7a43471a091308eda6c0d1b3ba94ed3e96407a93d374226517d83 setTodoCode Todo.decode.json
+Вызываем дебота
+=- tonos-cli --url https://net.ton.dev debot --debug fetch 0:41937d8d08c7a43471a091308eda6c0d1b3ba94ed3e96407a93d374226517d83
+
+
+https://web.ton.surf/debot?address=0%3A0feaa51229b24c92c8a4ca8155f061aadf83078d35163e5895417127770bbd69&net=devnet&restart=true

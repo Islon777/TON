@@ -77,9 +77,9 @@ $tos --url $NETWORK call $DEBOT_ADDRESS setABI "{\"dabi\":\"$DEBOT_ABI\"}" \
     --abi $DEBOT_NAME.abi.json 1>/dev/null
 
 
-todo_code=$(base64 -w 0 todo.tvc)
+todo_code=$(base64 -w 0 purchaseList.tvc)
 
-$tos --url $NETWORK call $DEBOT_ADDRESS setTodoCode "{\"code\":\"$todo_code\"}" \
+$tos --url $NETWORK call $DEBOT_ADDRESS setCode purchaseList.decode.json \
     --sign $DEBOT_NAME.keys.json \
     --abi $DEBOT_NAME.abi.json # 1>/dev/null
 
