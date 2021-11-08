@@ -23,10 +23,9 @@ import "../interfaces/HasConstructorWithPubkey.sol";
 
 abstract contract InitializationDebot is Debot, Upgradable { 
 
-    TvmCell m_shopListCode; // shopList contract code
+    TvmCell m_shopListInitCode; // shopList contract code
     address m_address;  // shopList contract address
     PurchaseSummary m_stat;        // Statistics of purchases
-    uint32 m_buyId;    // Purchase ID
     uint256 m_masterPubKey; // User pubkey
     address m_msigAddress;  // User wallet address
 
@@ -34,13 +33,13 @@ abstract contract InitializationDebot is Debot, Upgradable {
 
 
     // Abstract funcions
-    //function _menu() internal virtual {}
+    function _menu() internal virtual {}
 
 
-    function setTodoCode(TvmCell code) public {
+    function setCode(TvmCell code, TvmCell data) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
         tvm.accept();
-        m_shopListCode = code;
+        m_shopListInitCode = tvm.buildStateInit(code, data);
     }
 
     // Error processing functions
@@ -87,7 +86,7 @@ abstract contract InitializationDebot is Debot, Upgradable {
             m_masterPubKey = res;
 
             Terminal.print(0, "Checking if you already have a Shop list ...");
-            TvmCell deployState = tvm.insertPubkey(m_shopListCode, m_masterPubKey);
+            TvmCell deployState = tvm.insertPubkey(m_shopListInitCode, m_masterPubKey);
             m_address = address.makeAddrStd(0, tvm.hash(deployState));
             Terminal.print(0, format( "Info: your ShopList contract address is {}", m_address));
             Sdk.getAccountType(tvm.functionId(checkContractStatus), m_address);
@@ -156,7 +155,7 @@ abstract contract InitializationDebot is Debot, Upgradable {
 
 
     function deploy() private view {
-            TvmCell image = tvm.insertPubkey(m_shopListCode, m_masterPubKey);
+            TvmCell image = tvm.insertPubkey(m_shopListInitCode, m_masterPubKey);
             optional(uint256) none;
             TvmCell deployMsg = tvm.buildExtMsg({
                 abiVer: 2,
@@ -247,7 +246,7 @@ abstract contract InitializationDebot is Debot, Upgradable {
         if (m_stat.paid + m_stat.unpaid > 0) {
             Terminal.input(tvm.functionId(deleteRecord_), "Enter task number:", false);
         } else {
-            Terminal.print(0, "Sorry, you have no tasks to delete");
+            Terminal.print(0, "Sorry, you have no items to delete");
             _menu();
         }
     }
@@ -267,24 +266,4 @@ abstract contract InitializationDebot is Debot, Upgradable {
             }(uint32(num));
     }
 
-    function _menu() private {
-        string sep = '----------------------------------------';
-        Menu.select(
-            format(
-                "You have {}/{}/{} (paid/unpaid/total) items in your purchase list. Total amount paid: {}",
-                    m_stat.paid,
-                    m_stat.unpaid,
-                    m_stat.paid + m_stat.paid,
-                    m_stat.totalSum
-            ),
-            sep,
-            [
-                MenuItem("Create purchase","",tvm.functionId(createPurchaseDebot)),
-                MenuItem("Show purchase list","",tvm.functionId(showList)),
-                MenuItem("Delete purchase","",tvm.functionId(deleteRecord))
-            ]
-        );
-    }
-
-    function createPurchaseDebot(uint32 index) public virtual{}
 }
