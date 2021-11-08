@@ -8,21 +8,43 @@ import "./debots/InitializationDebot.sol";
 
 contract purchaseList is InitializationDebot {
 
-    PurchaseSummary m_stat;        
+    string m_name;
 
-
-    function createPurchaseDebot(uint32 index) public override{
-        index = index;
-        string name;
-        unit32 count;
-        name = Terminal.input(0, "Purchase name please:", false);
-        count = Terminal.input(0, "Enter required quantity:", false);
-        createPurchase_(name, count);
+    function _menu() internal override {
+        string sep = '----------------------------------------';
+        Menu.select(
+            format(
+                "You have {}/{}/{} (paid/unpaid/total) items in your purchase list. Total amount paid: {}",
+                    m_stat.paid,
+                    m_stat.unpaid,
+                    m_stat.paid + m_stat.unpaid,
+                    m_stat.totalSum
+            ),
+            sep,
+            [
+                MenuItem("Create purchase","",tvm.functionId(createItemName)),
+                MenuItem("Show purchase list","",tvm.functionId(showList)),
+                MenuItem("Delete purchase","",tvm.functionId(deleteRecord))
+            ]
+        );
     }
 
-    function createPurchase_(string name, unit32 count) public view {
+    function createItemName(uint32 index) public {
+        index = index; 
+        Terminal.input(tvm.functionId(saveItemName), "Item name please:", false);
+    }
+
+    function saveItemName(string name) public {
+        m_name = name;
+        Terminal.input(tvm.functionId(createPurchase_), "Enter required quantity:", false);
+    }
+
+    function createPurchase_(string quantity) public {
+        (uint res, bool status) = stoi(quantity);
+        uint32 count = uint32(res);
         optional(uint256) pubkey = 0;
-        IntShopList(m_address).createPurchase{
+        if (status) {
+            IntShopList(m_address).createPurchase{
                 abiVer: 2,
                 extMsg: true,
                 sign: true,
@@ -31,6 +53,14 @@ contract purchaseList is InitializationDebot {
                 expire: 0,
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
-            }(name, count);
+            }(m_name, count);
+        } else {
+            Terminal.input(tvm.functionId(createPurchase_), "Wrong symbols. Enter required quantity:", false);
+        }
+        
     }
 }
+
+
+
+
