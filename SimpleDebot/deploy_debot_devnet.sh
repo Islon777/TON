@@ -8,7 +8,7 @@ if [[ $1 != *".tvc"  ]] ; then
     echo "  ${0} FILENAME NETWORK"
     echo "    where:"
     echo "      FILENAME - required, debot tvc file name"
-    echo "      NETWORK  - optional, network endpoint, default is http://127.0.0.1"
+    echo "      NETWORK  - optional, network endpoint, default is https://net.ton.dev"
     echo ""
     echo "PRIMER:"
     echo "  ${0} mydebot.tvc https://net.ton.dev"
@@ -16,16 +16,16 @@ if [[ $1 != *".tvc"  ]] ; then
 fi
 
 DEBOT_NAME=${1%.*} # filename without extension
-NETWORK="${2:-http://127.0.0.1}"
+NETWORK="${2:-https://net.ton.dev}"
 
 #
 # This is TON OS SE giver address, correct it if you use another giver
 #
 #GIVER_ADDRESS=0:b5e9240fc2d2f1ff8cbb1d1dee7fb7cae155e5f6320e585fcc685698994a19a5
-GIVER_ADDRESS=0:841288ed3b55d9cdafa806807f02a0ae0c169aa5edfe88a789a6482429756a94
-# net.ton.dev 
-#GIVER_ADDRESS=0:2bb4a0e8391e7ea8877f4825064924bd41ce110fce97e939d3323999e1efbb13
-#GIVER_ADDRESS=0:6a08532380a9b0ff8e209bce3f7b10d840a89a19ca117b10cdd76dab818fbaec # my ton.dev giver wallet
+
+# net.ton.dev extraTon wallet
+GIVER_ADDRESS=0:6a08532380a9b0ff8e209bce3f7b10d840a89a19ca117b10cdd76dab818fbaec
+
 
 # Check if tonos-cli installed 
 tos=./tonos-cli
@@ -43,10 +43,11 @@ fi
 
 function giver {
     $tos --url $NETWORK call \
-        --abi ./local_giver.abi.json \
+        --abi base/giver.abi.json \
+        --sign base/giver.keys.json \
         $GIVER_ADDRESS \
-        sendGrams "{\"dest\":\"$1\",\"amount\":10000000000,\"bounce\":false}" \
-        1>/dev/null
+        sendTransaction "{\"dest\":\"$1\",\"value\":2000000000,\"bounce\":false,\"flags\":0,\"payload\":\"\" }" | tee -a logs.log
+        
 }
 
 function get_address {
@@ -61,27 +62,31 @@ echo "Step 1. Calculating debot address"
 genaddr $DEBOT_NAME
 DEBOT_ADDRESS=$(get_address $DEBOT_NAME)
 
-echo "Step 2. Sending tokens to address: $DEBOT_ADDRESS"
-giver $DEBOT_ADDRESS
+echo "Step 2. Send tokens to address: $DEBOT_ADDRESS"
+# giver $DEBOT_ADDRESS
+read -p 'Done? ' inputvar
 DEBOT_ABI=$(cat $DEBOT_NAME.abi.json | xxd -ps -c 20000)
 
 
 echo "Step 3. Deploying contract"
 $tos --url $NETWORK deploy $DEBOT_NAME.tvc "{}" \
     --sign $DEBOT_NAME.keys.json \
-    --abi $DEBOT_NAME.abi.json 1>/dev/null
+    --abi $DEBOT_NAME.abi.json | tee -a logs.log
 
 $tos --url $NETWORK call $DEBOT_ADDRESS setABI "{\"dabi\":\"$DEBOT_ABI\"}" \
     --sign $DEBOT_NAME.keys.json \
-    --abi $DEBOT_NAME.abi.json 1>/dev/null
-
+    --abi $DEBOT_NAME.abi.json | tee -a logs.log
 
 
 $tos --url $NETWORK call $DEBOT_ADDRESS setCode purchaseList.decode.json \
     --sign $DEBOT_NAME.keys.json \
-    --abi $DEBOT_NAME.abi.json # 1>/dev/null
+    --abi $DEBOT_NAME.abi.json | tee -a logs.log
 
 echo "Done! Deployed debot with address: $DEBOT_ADDRESS"
+echo "Done!"
+echo "Done!"
+echo "Done!"
+echo "Done!"
 echo "Done!"
 echo "Done!"
 echo "Done!"

@@ -1,0 +1,17 @@
+Config: default
+Input arguments:
+     tvc: purchaseBuyDebot.tvc
+      wc: None
+    keys: purchaseBuyDebot.keys.json
+init_data: None
+is_update_tvc: None
+
+Seed phrase: "any inmate fragile talent solve harvest oven conduct domain grit distance trap"
+Raw address: 0:1bebbfba8d9931bf8f8126e85eb839eab386e00d49854e9d636b232f692eaa5c
+testnet:
+Non-bounceable address (for init): 0QAb67-6jZkxv4-BJuheuDnqs4bgDUmFTp1jayMvaS6qXPyQ
+Bounceable address (for later access): kQAb67-6jZkxv4-BJuheuDnqs4bgDUmFTp1jayMvaS6qXKFV
+mainnet:
+Non-bounceable address (for init): UQAb67-6jZkxv4-BJuheuDnqs4bgDUmFTp1jayMvaS6qXEca
+Bounceable address (for later access): EQAb67-6jZkxv4-BJuheuDnqs4bgDUmFTp1jayMvaS6qXBrf
+Succeeded

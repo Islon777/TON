@@ -1,0 +1,17 @@
+Config: default
+Input arguments:
+     tvc: purchaseListDebot.tvc
+      wc: None
+    keys: purchaseListDebot.keys.json
+init_data: None
+is_update_tvc: None
+
+Seed phrase: "pull pottery correct picture kingdom exchange grant miss remind copy charge transfer"
+Raw address: 0:324d08a5a4c0273a610c7ee8a69588d4ea491b743ec0b96155fcb3fd08a810c6
+testnet:
+Non-bounceable address (for init): 0QAyTQilpMAnOmEMfuimlYjU6kkbdD7AuWFV_LP9CKgQxhcr
+Bounceable address (for later access): kQAyTQilpMAnOmEMfuimlYjU6kkbdD7AuWFV_LP9CKgQxkru
+mainnet:
+Non-bounceable address (for init): UQAyTQilpMAnOmEMfuimlYjU6kkbdD7AuWFV_LP9CKgQxqyh
+Bounceable address (for later access): EQAyTQilpMAnOmEMfuimlYjU6kkbdD7AuWFV_LP9CKgQxvFk
+Succeeded

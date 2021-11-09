@@ -20,9 +20,9 @@ import "../interfaces/HasConstructorWithPubkey.sol";
 
 
 
-
 abstract contract InitializationDebot is Debot, Upgradable { 
 
+    bytes m_icon;
     TvmCell m_shopListInitCode; // shopList contract code
     address m_address;  // shopList contract address
     PurchaseSummary m_stat;        // Statistics of purchases
@@ -31,6 +31,8 @@ abstract contract InitializationDebot is Debot, Upgradable {
 
     uint32 INITIAL_BALANCE =  200000000;  // Initial shopList contract balance
 
+    
+    
 
     // Abstract funcions
     function _menu() internal virtual {}
@@ -58,23 +60,13 @@ abstract contract InitializationDebot is Debot, Upgradable {
     }
 
     /// @notice Returns Metadata about DeBot.
-    function getDebotInfo() public functionID(0xDEB) override view returns(
+    function getDebotInfo() public functionID(0xDEB) virtual override view returns(
         string name, string version, string publisher, string key, string author,
         address support, string hello, string language, string dabi, bytes icon
-    ) {
-        name = "ShopList DeBot";
-        version = "0.1.0";
-        publisher = "Islon Company";
-        key = "Shop list manager";
-        author = "Islon";
-        support = address.makeAddrStd(0, 0x66e01d6df5a8d7677d9ab2daf7f258f1e2a7fe73da5320300395f99e01dc3b5f);
-        hello = "Hi, i'm a shopList DeBot.";
-        language = "en";
-        dabi = m_debotAbi.get();
-    }
+    ){}
 
-    //function getRequiredInterfaces() public view virtual override returns (uint256[] interfaces) {}
-        function getRequiredInterfaces() public view override returns (uint256[] interfaces) {
+    
+    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {
         return [ Terminal.ID, Menu.ID, AddressInput.ID, ConfirmInput.ID ];
     }
 

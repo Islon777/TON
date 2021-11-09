@@ -4,7 +4,7 @@ pragma AbiHeader pubkey;
 
 import "./interfaces/structs.sol";
 
-contract shopList {
+contract purchaseList {
     /*
      * ERROR CODES
      * 100 - Unauthorized

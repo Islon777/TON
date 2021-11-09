@@ -3,7 +3,7 @@
 	"header": ["pubkey", "time", "expire"],
 	"functions": [
 		{
-			"name": "requestItemName",
+			"name": "payItem",
 			"inputs": [
 				{"name":"index","type":"uint32"}
 			],
@@ -11,7 +11,7 @@
 			]
 		},
 		{
-			"name": "storeItemName",
+			"name": "payItem_",
 			"inputs": [
 				{"name":"value","type":"bytes"}
 			],
@@ -19,7 +19,7 @@
 			]
 		},
 		{
-			"name": "createPurchase_",
+			"name": "pay_",
 			"inputs": [
 				{"name":"value","type":"bytes"}
 			],
