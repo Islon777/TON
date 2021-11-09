@@ -2,7 +2,7 @@
 Some instructions to simplify deploying and testing process.
 
 ### Compile
-`compile.sh` compiles contract and 2 debots, save stateInit of contract.
+`compile.sh` compiles contract and 2 debots, saves stateInit of contract.
 ```
 ./compile.sh
 ```
